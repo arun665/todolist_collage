@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+   
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+        "width=device-width, initial-scale=1.0">
+  
+    <link rel="stylesheet" href=
+"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity=
+"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+  
+    <script src="index.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Alfa Slab One' rel='stylesheet'>
+  
+    <title>To Do List</title>
+    <style>
+        body {
+    font-family: 'Sofia';
+    animation-name: example;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes example {
+  0%   {background-color:rgb(236, 103, 103); }
+  25%  {background-color:rgb(9, 253, 160); }
+  50%  {background-color:blue; }
+  75%  {background-color:green; }
+  100% {background-color:red; }
+}
+
+
+.main{
+background-color: white;; width:70%;
+margin-left:15%;
+border-radius:40px;
+padding:5%;    box-shadow:20px 20px 20px greenyellow;
+transition:1s;
+}
+.main:hover
+{
+    box-shadow:20px 20px 20px red;
+
+}.list-group li{
+    width:100%;
+    background-color: lightcoral;
+    border-radius: 20px; color:white;
+    font-size:2em;
+    margin:3%;;
+    padding:2%;transition: 1s;;
+}
+.list-group li:hover{
+    background-color: olive;  border-radius: 30px;
+}
+.form-control{
+    border:1px solid blue;
+    box-shadow:10px 10px 10px grey;
+}
+    </style>
+</head>
+   
+<body >
+    <header class=" text-white p-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <font 
+                        size="11" color="white" style="">
+                        <strong>Made By Arun Sharma</strong>
+                    </font>
+                       
+                </div>
+            </div>
+        </div>
+    </header>
+  <div class="container main">
+    <div class="container mt-3">
+        <h2>Add Tasks  here</h2>
+   
+        <label id="lblsuccess" class="text-success" 
+                style="display: none;">
+        </label>
+          
+        <form id="addForm">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-7">
+  
+                    <input type="text" onkeyup=
+                        "toggleButton(this, 'submit')"
+                        class="form-control" id="item">
+                </div>
+  
+                <div class="col-lg-5 col-md-5 col-sm-5">
+                  <input type="submit" class="btn btn-success"
+                        id="submit" value="Submit">
+                        
+                 
+                </div>
+            </div>
+        </form>
+   
+        <h3 class="mt-4">Your tasks for today</h3>
+   
+        <form id="addForm">
+            <ul class="list-group" id="items"></ul>
+        </form>
+    </div>
+    </div>
+
+    <script>
+
+window.onload = () => {
+    const form1 = document.querySelector("#addForm");
+  
+    let items = document.getElementById("items");
+    let submit = document.getElementById("submit");
+  
+    let editItem = null;
+  
+    form1.addEventListener("submit", addItem);
+    items.addEventListener("click", removeItem);
+};
+  
+function addItem(e) {
+    e.preventDefault();
+  
+    if (submit.value != "Submit") {
+        console.log("Hello");
+  
+        editItem.target.parentNode.childNodes[0].data
+            = document.getElementById("item").value;
+  
+        submit.value = "Submit";
+        document.getElementById("item").value = "";
+  
+
+  
+        return false;
+    }
+  
+    let newItem = document.getElementById("item").value;
+    if (newItem.trim() == "" || newItem.trim() == null)
+        return false;
+    else
+        document.getElementById("item").value = "";
+  
+    let li = document.createElement("li");
+    li.className = "list-group-item";
+  
+    let deleteButton = document.createElement("button");
+  
+    deleteButton.className = 
+        "btn-danger btn btn-sm float-right delete";
+  
+    deleteButton.appendChild(document.createTextNode("Delete"));
+  
+    let editButton = document.createElement("button");
+  
+    editButton.className = 
+            "btn-success btn btn-sm float-right edit";
+  
+    editButton.appendChild(document.createTextNode("Edit"));
+  
+    li.appendChild(document.createTextNode(newItem));
+    li.appendChild(deleteButton);
+    li.appendChild(editButton);
+  
+    items.appendChild(li);
+}
+  
+function removeItem(e) {
+    e.preventDefault();
+    if (e.target.classList.contains("delete")) {
+     
+            let li = e.target.parentNode;
+            items.removeChild(li);
+  
+
+    }
+    if (e.target.classList.contains("edit")) {
+        document.getElementById("item").value =
+            e.target.parentNode.childNodes[0].data;
+        submit.value = "EDIT";
+        editItem = e;
+    }
+}
+  
+function toggleButton(ref, btnID) {
+    document.getElementById(btnID).disabled = false;
+}
+
+    </script>
+</body>
+   
+</html>
